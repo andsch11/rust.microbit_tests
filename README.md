@@ -1,39 +1,22 @@
-# blinky-rs
-Bart Massey 2023
+# Status
+- Tested with micro:bit V2.21
+- LED blinking
+- Can Run/Debug from VSCode
+- "cargo run" in command line prints RTT logs to Desktop Console
 
-This Rust app for the BBC micro:bit v2 is a bare-minimum
-blinky light program.
+# What is needed to get started
+VSCode Extensions
+  - rust-analyzer
+  - Maybe "Debugger for probe-rs"
+  - Maybe "CodeLLDB"
 
-Alternate branches:
+rustup target add thumbv7em-none-eabihf
+cargo install cargo-binstall
+cargo binstall probe-rs-tools
 
-* `bare`: Blinky without the `microbit_v2` crate.
-* `offboard`: Blinky for an LED connected to pin 8 on
-  the MB2 edge connector.
+# Troubleshooting
+List attached debug probes
+> probe-rs list 
 
-## Build and Run
-
-You can follow the instructions from the embedded micro:bit
-[*Discovery Book*](https://docs.rust-embedded.org/discovery/microbit/index.html)
-to set up your build environment.  Then you can say
-
-    cargo embed --release
-
-to flash and run this.
-
-You can also follow the setup instructions in the `README`
-on the `microbit` crate
-[repo](https://github.com/nrf-rs/microbit). You can then say
-
-    cargo run --release
-
-## License
-
-This work is made available under the "MIT License". Please
-see the file `LICENSE.txt` in this distribution for license
-terms.
-
-## Acknowledgements
-
-The hardware-using code and build infrastructure here were
-heavily derived from the examples in the amazing `microbit`
-crate.
+The numbers from the Probe are needed in config.toml for --probe
+> runner = "probe-rs run --chip nRF52833_xxAA --probe 0d28:0204"
