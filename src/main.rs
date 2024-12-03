@@ -1,17 +1,20 @@
 #![no_std]
 #![no_main]
 
+extern crate core;
+use core::ffi::c_int;
+
+extern "C" {
+    fn multiply(a: c_int, b: c_int) -> c_int;
+}
+
 use cortex_m_rt::entry;
 use microbit::{
     board::Board,
-    hal::{
-        prelude::*,
-        timer::Timer,
-    },
+    hal::{prelude::*, timer::Timer},
 };
-use rtt_target::{rtt_init_print, rprintln};                                   
-use panic_rtt_target as _;                                                    
-
+use panic_rtt_target as _;
+use rtt_target::{rprintln, rtt_init_print};
 
 enum State {
     LedOn,
@@ -42,5 +45,10 @@ fn init() -> ! {
             }
         };
         timer.delay_ms(500u16);
+
+        unsafe {
+            let result = multiply(5000, 5);
+            rprintln!("[Rust] Result: {}", result);
+        }
     }
 }
